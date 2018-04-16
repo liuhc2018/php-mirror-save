@@ -48,7 +48,7 @@
     header('Connection: close');
     ignore_user_abort();
     ob_start();
-    echo('Connection Closed\n');
+    //echo('Connection Closed\n');
     $size = ob_get_length();
     header("Content-Length: $size");
     ob_end_flush();
