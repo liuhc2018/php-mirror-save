@@ -8,10 +8,10 @@
     $file = $_POST["file"];
     if (!unlink($file))
     {
-        echo ("Error delete");
+        echo ("Error delete\n");
     }
     else
     {
-        echo ("Success delete");
+        echo ("Success delete\n");
     }
 ?>

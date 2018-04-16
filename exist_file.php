@@ -7,8 +7,8 @@
      */
     $file = $_POST["file"];
     if(file_exists($file)){
-        echo "Exist";
+        echo "Exist\n";
     }else{
-        echo "Not exist";
+        echo "Not exist\n";
     }
 ?>
