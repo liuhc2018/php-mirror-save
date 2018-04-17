@@ -44,17 +44,6 @@
         }
     }
 
-    while(ob_get_level()) ob_end_clean();
-    header('Connection: close');
-    ignore_user_abort();
-    ob_start();
-    //echo('Connection Closed\n');
-    $size = ob_get_length();
-    header("Content-Length: $size");
-    ob_end_flush();
-    flush();
-
-    sleep(20);//for test
     $savePath="savePath";
     if(isset($_POST[$savePath])){
         $result=upload($_POST[$savePath]);

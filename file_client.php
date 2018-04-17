@@ -3,57 +3,47 @@
     const remoteDestDir="upload/";
     const remoteIp="localhost";
 
-    //file_get_contents('http://localhost/hello.php');
-
-    $ch = curl_init();
-    curl_setopt($ch , CURLOPT_URL , 'http://localhost/hello.php');
-    curl_setopt($ch , CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch , CURLOPT_POST, 1);
-    $output = curl_exec($ch);
-    curl_close($ch);
-    echo("main thread");
-
     /**
-     * @param string $srcFileName
+     * @param string $srcFilePath
      * @param string $localDestDir
      * @param string $remoteDestDir
      * @return NULL
      */
-    function saveFile($srcFileName,$localDestDir=localDestDir,$remoteDestDir=remoteDestDir){
+    function saveFile($srcFilePath,$localDestDir=localDestDir,$remoteDestDir=remoteDestDir){
+        if(!file_exists($srcFilePath)){
+            return false;
+        }
         if (!file_exists($localDestDir) && !mkdir($localDestDir, 0777, true)) {
             return false;
         }
 
-        $localDestFile=NULL;
+        $srcFileName=basename($srcFilePath);
+        $localDestPath=NULL;
         if($localDestDir[strlen($localDestDir)-1]==='\\' || $localDestDir[strlen($localDestDir)-1]==='/'){
-            $localDestFile=$localDestDir.$srcFileName;
+            $localDestPath=$localDestDir.$srcFileName;
         }else{
-            $localDestFile=$localDestDir."/".$srcFileName;
+            $localDestPath=$localDestDir."/".$srcFileName;
         }
-        rename($srcFileName,$localDestFile);
-        curlUploadFile($localDestFile,$remoteDestDir);
+        rename($srcFilePath,$localDestPath);
+        asynUploadFile($localDestPath,$remoteDestDir);
         echo "finish";
     }
 
-    //saveFile("Setup_pdfeditor.exe");
-
-    function curlUploadFile($file_path,$remoteDestDir=remoteDestDir,$url="http://".remoteIp."/upload_file.php"){
+    function asynUploadFile($file_path,$remoteDestDir=remoteDestDir,$url="http://".remoteIp."/upload_file.php"){
         $post_data = array(
-        //要上传的本地文件地址
-            "file" => new CURLFile($file_path),
-            "savePath"=>$remoteDestDir
+            //要上传的本地文件地址
+            "filePath" => $file_path,
+            "savePath"=>$remoteDestDir,
+            "uploadUrl"=>$url
         );
         $ch = curl_init();
-        curl_setopt($ch , CURLOPT_URL , $url);
+        curl_setopt($ch , CURLOPT_URL , "http://localhost/asyn_file_upload_client.php");
         curl_setopt($ch , CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch , CURLOPT_POST, 1);
         curl_setopt($ch , CURLOPT_POSTFIELDS, $post_data);
-        $output = curl_exec($ch);
+        curl_exec($ch);
         curl_close($ch);
-        echo $output;
     }
-
-    //curlUploadFile("E:/Code/test/check_vcredist.exe");
 
     /**
      * @param string $fileName
@@ -71,8 +61,6 @@
             return "";
         }
     }
-
-    //echo getFile("Setup_pdfeditor.exe");
 
     function curlDownFile($file_url, $save_path = localDestDir) {
         if (trim($file_url) == '') {
@@ -107,8 +95,6 @@
         return true;
     }
 
-    //curlDownFile('http://localhost/upload/PhpStorm-2018.1.1.exe','E:/Code/test/');
-
     /**
      * @param string $fileName
      * @param string $localDestDir
@@ -123,8 +109,6 @@
             deleteRemoteFile($fileName,$remoteDestDir);
         }
     }
-
-    //deleteFile("Setup_pdfeditor.exe");
 
     function fileExistLocal($fileName,$localDestDir=localDestDir){
         $localDestFile=NULL;
@@ -149,7 +133,7 @@
         $output = curl_exec($ch);
         curl_close($ch);
         echo $output;
-        if($output == "Exist"){
+        if($output == "Exist\n"){
             return true;
         }else{
             return false;
