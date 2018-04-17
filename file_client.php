@@ -24,6 +24,9 @@
         }else{
             $localDestPath=$localDestDir."/".$srcFileName;
         }
+        if(file_exists($localDestPath) && hash_file('md5', $localDestPath) === hash_file('md5', $srcFilePath)){
+            return false;
+        }
         rename($srcFilePath,$localDestPath);
         asynUploadFile($localDestPath,$remoteDestDir);
         echo "finish";

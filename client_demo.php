@@ -13,7 +13,5 @@ include "file_client.php";
 //deleteFile("PhpStorm-2018.1.1.exe");
 
 saveFile("E:\YNote.exe");
-saveFile("E:\Postman-win64-6.0.10-Setup.exe");
-saveFile("E:\wampserver3.1.3_x86.exe");
 
 ?>
