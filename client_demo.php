@@ -8,10 +8,10 @@
 
 include "file_client.php";
 
-//saveFile("C:\wamp\www\upload\\test2\PhpStorm-2018.1.1.exe");
-//echo getFile("PhpStorm-2018.1.1.exe");
-//deleteFile("PhpStorm-2018.1.1.exe");
-
-saveFile("E:\YNote.exe");
+//saveFile("E:\YNote.exe");
+//echo getFile("YNote.exe");
+deleteFile("YNote.exe");
+echo getFile("YNote.exe");
+//saveFile("E:\YNote.exe");
 
 ?>

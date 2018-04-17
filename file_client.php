@@ -1,7 +1,5 @@
 <?php
-    const localDestDir="E:/Code/test/";
-    const remoteDestDir="upload/";
-    const remoteIp="localhost";
+    include "client_const.php";
 
     /**
      * @param string $srcFilePath

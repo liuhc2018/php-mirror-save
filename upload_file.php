@@ -1,4 +1,7 @@
 <?php
+
+    const upDir="upload/";
+
     class FileInfo{
         var $name,$type,$location;
         var $size;
@@ -19,8 +22,6 @@
             $this->fileInfo=$fileInfo;
         }
     }
-
-    const upDir="upload/";
 
     function upload($savePath=upDir){
         if ($_FILES["file"]["error"] > 0) {

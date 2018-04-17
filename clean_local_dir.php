@@ -5,12 +5,9 @@
      * Date: 2018/4/17
      * Time: 13:45
      */
-    $dirname = "E:/Code/test/";//local dir to compute
-    const maxSize=100*1024*1024;//max bytes of local dir
+    include "client_const.php" ;
 
-    const remoteDestDir="upload/";//remote dir storing file
-    const remoteIp="localhost";//remote ip
-
+    $dirname = localDestDir;//local dir to compute
     $fileArray=array();
 
     //recursive count files in dir
